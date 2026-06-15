@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="按开发场景整理的 AI 与开源开发工具清单，包含用途、适用人群、许可证与官方仓库。">
+  <meta name="theme-color" content="#fffaf2">
+  <meta property="og:title" content="AI 开源工具志">
+  <meta property="og:description" content="值得收藏的 AI 与开源开发工具。">
+  <meta property="og:type" content="website">
+  <title>AI 开源工具志</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#catalog">跳到工具清单</a>
+  <header class="site-header">
+    <a class="brand" href="#top"><span>AI</span> 开源工具志</a>
+    <nav aria-label="主导航">
+      <a href="#ai-coding">AI 编程</a>
+      <a href="#models">模型推理</a>
+      <a href="#agents">Agent</a>
+      <a href="#data">数据检索</a>
+      <a href="#devops">DevOps</a>
+    </nav>
+    <a class="github-link" href="https://github.com/" aria-label="前往 GitHub">GitHub ↗</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">2026 精选 · 持续更新</p>
+        <h1>值得收藏的<br>AI 与开源开发工具</h1>
+        <p class="hero-intro">
+          从编码助手到本地模型，从数据检索到基础设施。只收录有实际价值、
+          能找到官方仓库与明确许可证的项目。
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#featured">查看编辑精选</a>
+          <a class="button button-secondary" href="#catalog">浏览完整清单</a>
+        </div>
+        <ul class="principles" aria-label="收录原则">
+          <li><strong>编辑精选</strong><span>人工判断，不靠榜单堆砌</span></li>
+          <li><strong>开源优先</strong><span>许可证与官方仓库可追溯</span></li>
+          <li><strong>长期更新</strong><span>移除停更或定位变化的项目</span></li>
+        </ul>
+      </div>
+      <img class="hero-art" src="assets/tool-stack-illustration.png"
+        alt="书本、软件卡片和绿植组成的开源工具插画" width="1200" height="900">
+    </section>
+
+    <section class="featured section-shell" id="featured">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Editor's picks</p>
+          <h2>编辑精选 <span>01–05</span></h2>
+        </div>
+        <p>覆盖日常开发中最常见的五类任务，先从这些项目开始探索。</p>
+      </div>
+      <ol class="featured-list">
+        <li class="tool-item featured-item">
+          <span class="rank">01</span>
+          <img src="assets/logos/continuedev.png" alt="" loading="lazy">
+          <div class="tool-copy">
+            <h3><a href="https://github.com/continuedev/continue">Continue</a></h3>
+            <p>把开源 AI 编码助手接入 VS Code 与 JetBrains，自由选择模型和上下文。</p>
+          </div>
+          <span class="audience">日常开发</span><span class="license">Apache-2.0</span>
+          <a class="repo" href="https://github.com/continuedev/continue">官方仓库 ↗</a>
+        </li>
+        <li class="tool-item featured-item">
+          <span class="rank">02</span>
+          <img src="assets/logos/ollama.png" alt="" loading="lazy">
+          <div class="tool-copy">
+            <h3><a href="https://github.com/ollama/ollama">Ollama</a></h3>
+            <p>用一条命令在本机运行主流开放模型，适合原型开发与隐私敏感场景。</p>
+          </div>
+          <span class="audience">本地 AI</span><span class="license">MIT</span>
+          <a class="repo" href="https://github.com/ollama/ollama">官方仓库 ↗</a>
+        </li>
+        <li class="tool-item featured-item">
+          <span class="rank">03</span>
+          <img src="assets/logos/qdrant.png" alt="" loading="lazy">
+          <div class="tool-copy">
+            <h3><a href="https://github.com/qdrant/qdrant">Qdrant</a></h3>
+            <p>面向生产环境的向量数据库，为语义搜索和 RAG 提供过滤与高效检索。</p>
+          </div>
+          <span class="audience">RAG 团队</span><span class="license">Apache-2.0</span>
+          <a class="repo" href="https://github.com/qdrant/qdrant">官方仓库 ↗</a>
+        </li>
+        <li class="tool-item featured-item">
+          <span class="rank">04</span>
+          <img src="assets/logos/astral-sh.png" alt="" loading="lazy">
+          <div class="tool-copy">
+            <h3><a href="https://github.com/astral-sh/ruff">Ruff</a></h3>
+            <p>用 Rust 编写的高速 Python 检查器与格式化工具，适合替换多工具链。</p>
+          </div>
+          <span class="audience">Python</span><span class="license">MIT</span>
+          <a class="repo" href="https://github.com/astral-sh/ruff">官方仓库 ↗</a>
+        </li>
+        <li class="tool-item featured-item">
+          <span class="rank">05</span>
+          <img src="assets/logos/opentofu.png" alt="" loading="lazy">
+          <div class="tool-copy">
+            <h3><a href="https://github.com/opentofu/opentofu">OpenTofu</a></h3>
+            <p>社区驱动的基础设施即代码工具，保持开放治理与 Terraform 兼容体验。</p>
+          </div>
+          <span class="audience">平台工程</span><span class="license">MPL-2.0</span>
+          <a class="repo" href="https://github.com/opentofu/opentofu">官方仓库 ↗</a>
+        </li>
+      </ol>
+    </section>
+
+    <nav class="category-index catalog-index" aria-label="工具分类">
+      <span>快速抵达</span>
+      <a href="#ai-coding">AI 编程</a>
+      <a href="#models">模型与推理</a>
+      <a href="#agents">Agent 与自动化</a>
+      <a href="#data">数据与检索</a>
+      <a href="#editors">编辑器与终端</a>
+      <a href="#quality">测试与质量</a>
+      <a href="#devops">DevOps</a>
+    </nav>
+
+    <div id="catalog" class="catalog">
+      <section class="category section-shell" id="ai-coding">
+        <div class="category-title accent-coral">
+          <div><span>01</span><h2>AI 编程</h2></div>
+          <p>从补全到自主任务，为日常开发增加一个可靠的 AI 搭档。</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-item"><img src="assets/logos/Aider-AI.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/Aider-AI/aider">Aider</a></h3><p>在终端里与模型结对编程，围绕 Git 工作流修改代码。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/TabbyML.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/TabbyML/tabby">Tabby</a></h3><p>可自托管的 AI 编码助手，适合重视私有代码安全的团队。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/All-Hands-AI.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/All-Hands-AI/OpenHands">OpenHands</a></h3><p>让软件 Agent 在沙箱中编写、运行和调试真实项目。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/cline.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/cline/cline">Cline</a></h3><p>在编辑器内执行多步骤编码任务，并保留人工确认环节。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/RooCodeInc.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/RooCodeInc/Roo-Code">Roo Code</a></h3><p>支持自定义模式和多模型的 VS Code 编码 Agent。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/SWE-agent.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/SWE-agent/SWE-agent">SWE-agent</a></h3><p>让语言模型使用工具解决真实 GitHub 软件工程任务。</p></div><span class="license">MIT</span></article>
+        </div>
+      </section>
+
+      <section class="category section-shell" id="models">
+        <div class="category-title accent-yellow">
+          <div><span>02</span><h2>模型与推理</h2></div>
+          <p>在本地、工作站或服务器上运行和服务开放模型。</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-item"><img src="assets/logos/ggerganov.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a></h3><p>在广泛硬件上高效运行 GGUF 模型的 C/C++ 推理引擎。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/vllm-project.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/vllm-project/vllm">vLLM</a></h3><p>面向高吞吐模型服务的推理与调度引擎。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/ml-explore.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/ml-explore/mlx">MLX</a></h3><p>为 Apple Silicon 设计的机器学习数组框架。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/mudler.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/mudler/LocalAI">LocalAI</a></h3><p>可自托管的 OpenAI 兼容 API，支持多种本地后端。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/mlc-ai.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/mlc-ai/mlc-llm">MLC LLM</a></h3><p>把语言模型编译并部署到浏览器、移动端和 GPU。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/ollama.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/ollama/ollama">Ollama</a></h3><p>本地拉取、管理和运行开放模型的简洁工具链。</p></div><span class="license">MIT</span></article>
+        </div>
+      </section>
+
+      <section class="category section-shell" id="agents">
+        <div class="category-title accent-mint">
+          <div><span>03</span><h2>Agent 与自动化</h2></div>
+          <p>组合模型、工具和工作流，构建可观测的智能应用。</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-item"><img src="assets/logos/langchain-ai.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/langchain-ai/langchain">LangChain</a></h3><p>连接模型、检索器和工具的应用开发框架。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/microsoft.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/microsoft/autogen">AutoGen</a></h3><p>构建多 Agent 对话、协作和事件驱动应用。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/crewAIInc.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/crewAIInc/crewAI">CrewAI</a></h3><p>以角色、任务和流程组织协作型 AI Agent。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/FlowiseAI.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/FlowiseAI/Flowise">Flowise</a></h3><p>用可视化节点搭建 LLM 工作流和 Agent。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/deepset-ai.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/deepset-ai/haystack">Haystack</a></h3><p>面向生产级 RAG、搜索和 Agent 管线的框架。</p></div><span class="license">Apache-2.0</span></article>
+        </div>
+      </section>
+
+      <section class="category section-shell" id="data">
+        <div class="category-title accent-sky">
+          <div><span>04</span><h2>数据与检索</h2></div>
+          <p>为搜索、分析和 RAG 准备可靠的数据底座。</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-item"><img src="assets/logos/milvus-io.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/milvus-io/milvus">Milvus</a></h3><p>为大规模向量检索设计的分布式数据库。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/lancedb.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/lancedb/lancedb">LanceDB</a></h3><p>适合嵌入式与云端 AI 应用的多模态数据库。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/chroma-core.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/chroma-core/chroma">Chroma</a></h3><p>为 AI 应用提供简单直接的开源检索能力。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/weaviate.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/weaviate/weaviate">Weaviate</a></h3><p>结合向量与结构化过滤的云原生数据库。</p></div><span class="license">BSD-3-Clause</span></article>
+          <article class="tool-item"><img src="assets/logos/duckdb.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/duckdb/duckdb">DuckDB</a></h3><p>可嵌入进程的高性能分析型 SQL 数据库。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/qdrant.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/qdrant/qdrant">Qdrant</a></h3><p>支持载荷过滤和分布式部署的向量搜索引擎。</p></div><span class="license">Apache-2.0</span></article>
+        </div>
+      </section>
+
+      <section class="category section-shell" id="editors">
+        <div class="category-title accent-blue">
+          <div><span>05</span><h2>编辑器与终端</h2></div>
+          <p>改善编写、导航和操作代码的基础体验。</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-item"><img src="assets/logos/microsoft.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/microsoft/vscode">VS Code</a></h3><p>拥有丰富扩展生态的跨平台代码编辑器源码。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/neovim.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/neovim/neovim">Neovim</a></h3><p>面向现代插件和异步工作流的 Vim 分支。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/zed-industries.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/zed-industries/zed">Zed</a></h3><p>以性能、协作和 AI 为核心的原生代码编辑器。</p></div><span class="license">GPL-3.0</span></article>
+          <article class="tool-item"><img src="assets/logos/helix-editor.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/helix-editor/helix">Helix</a></h3><p>内置语法树与 LSP 支持的模态终端编辑器。</p></div><span class="license">MPL-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/ohmyzsh.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/ohmyzsh/ohmyzsh">Oh My Zsh</a></h3><p>管理 Zsh 配置、插件和主题的社区框架。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/tmux.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/tmux/tmux">tmux</a></h3><p>在一个终端中管理持久会话、窗口和面板。</p></div><span class="license">ISC</span></article>
+        </div>
+      </section>
+
+      <section class="category section-shell" id="quality">
+        <div class="category-title accent-violet">
+          <div><span>06</span><h2>测试与质量</h2></div>
+          <p>自动化验证、安全扫描和代码质量检查。</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-item"><img src="assets/logos/microsoft.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/microsoft/playwright">Playwright</a></h3><p>跨 Chromium、Firefox 和 WebKit 的端到端测试。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/SeleniumHQ.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/SeleniumHQ/selenium">Selenium</a></h3><p>成熟的浏览器自动化协议、驱动和测试工具。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/gitleaks.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/gitleaks/gitleaks">Gitleaks</a></h3><p>在仓库历史、文件和提交中发现泄露的密钥。</p></div><span class="license">MIT</span></article>
+          <article class="tool-item"><img src="assets/logos/aquasecurity.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/aquasecurity/trivy">Trivy</a></h3><p>扫描容器、仓库、IaC 和依赖中的安全风险。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/semgrep.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/semgrep/semgrep">Semgrep</a></h3><p>用结构化规则查找代码缺陷和安全问题。</p></div><span class="license">LGPL-2.1</span></article>
+          <article class="tool-item"><img src="assets/logos/astral-sh.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/astral-sh/ruff">Ruff</a></h3><p>极速 Python 代码检查、格式化与规则整合工具。</p></div><span class="license">MIT</span></article>
+        </div>
+      </section>
+
+      <section class="category section-shell" id="devops">
+        <div class="category-title accent-navy">
+          <div><span>07</span><h2>DevOps 与基础设施</h2></div>
+          <p>从容器编排到持续交付，建立可重复的工程系统。</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-item"><img src="assets/logos/moby.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/moby/moby">Moby</a></h3><p>Docker 产品所基于的开放容器组件项目。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/kubernetes.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/kubernetes/kubernetes">Kubernetes</a></h3><p>自动部署、扩缩容和管理容器化应用的平台。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/helm.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/helm/helm">Helm</a></h3><p>用可复用 Chart 管理 Kubernetes 应用发布。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/argoproj.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/argoproj/argo-cd">Argo CD</a></h3><p>面向 Kubernetes 的声明式 GitOps 持续交付。</p></div><span class="license">Apache-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/opentofu.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/opentofu/opentofu">OpenTofu</a></h3><p>开放治理的基础设施即代码工具。</p></div><span class="license">MPL-2.0</span></article>
+          <article class="tool-item"><img src="assets/logos/ansible.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/ansible/ansible">Ansible</a></h3><p>用可读剧本完成配置管理和任务自动化。</p></div><span class="license">GPL-3.0</span></article>
+          <article class="tool-item"><img src="assets/logos/caddyserver.png" alt="" loading="lazy"><div class="tool-copy"><h3><a href="https://github.com/caddyserver/caddy">Caddy</a></h3><p>默认自动 HTTPS 的可扩展 Web 服务器。</p></div><span class="license">Apache-2.0</span></article>
+        </div>
+      </section>
+    </div>
+
+    <section class="contribute" id="contribute">
+      <div>
+        <p class="section-kicker">Open collection</p>
+        <h2>发现或使用了值得推荐的开源工具？</h2>
+        <p>提交项目用途、官方仓库、许可证和推荐理由，一起让清单更可靠。</p>
+      </div>
+      <a class="button button-primary" href="https://github.com/">参与共建 ↗</a>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>AI 开源工具志</strong><p>为开发者整理有用、可追溯的开源工具。</p></div>
+    <div><strong>说明</strong><p>许可证仅作快速参考，采用前请以项目仓库为准。</p></div>
+    <div><strong>更新</strong><p>内容更新：2026 年 6 月</p></div>
+  </footer>
+</body>
+</html>
