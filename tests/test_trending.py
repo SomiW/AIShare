@@ -50,6 +50,40 @@ class TrendingParserTests(unittest.TestCase):
         self.assertTrue(is_ai_repository(repositories[0]))
         self.assertFalse(is_ai_repository(repositories[1]))
 
+    def test_does_not_match_ai_inside_unrelated_words(self):
+        repository = Repository(
+            name="iptv-org/iptv",
+            url="https://github.com/iptv-org/iptv",
+            description="Publicly available channels maintained by volunteers.",
+            language="TypeScript",
+            stars=100,
+            stars_today=10,
+        )
+
+        self.assertFalse(is_ai_repository(repository))
+
+    def test_ignores_sponsor_links_before_repository_heading(self):
+        source = """
+        <article class="Box-row">
+          <a href="/sponsors/example">Sponsor</a>
+          <h2 class="h3 lh-condensed">
+            <a href="/chatwoot/chatwoot">chatwoot / chatwoot</a>
+          </h2>
+          <p class="col-9 color-fg-muted my-1 pr-4">Customer support tool.</p>
+          <span itemprop="programmingLanguage">Ruby</span>
+          <a href="/chatwoot/chatwoot/stargazers">31,509</a>
+          <span class="d-inline-block float-sm-right">431 stars today</span>
+        </article>
+        """
+
+        repositories = parse_trending(source)
+
+        self.assertEqual(repositories[0].name, "chatwoot/chatwoot")
+        self.assertEqual(
+            repositories[0].url,
+            "https://github.com/chatwoot/chatwoot",
+        )
+
     def test_selects_separate_ai_and_development_lists(self):
         repositories = deduplicate_repositories(
             parse_trending(FIXTURE.read_text(encoding="utf-8"))

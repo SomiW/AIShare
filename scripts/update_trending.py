@@ -63,6 +63,7 @@ class TrendingParser(HTMLParser):
         self.card = None
         self.capture = None
         self.capture_parts = []
+        self.in_repository_heading = False
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
@@ -82,10 +83,15 @@ class TrendingParser(HTMLParser):
         if self.card is None:
             return
 
+        if tag == "h2" and {"h3", "lh-condensed"}.issubset(classes):
+            self.in_repository_heading = True
+            return
+
         if tag == "a":
             href = attributes.get("href", "")
             if (
-                not self.card["name"]
+                self.in_repository_heading
+                and not self.card["name"]
                 and href.count("/") == 2
                 and not href.endswith("/stargazers")
             ):
@@ -112,6 +118,9 @@ class TrendingParser(HTMLParser):
     def handle_endtag(self, tag):
         if self.card is None:
             return
+
+        if tag == "h2":
+            self.in_repository_heading = False
 
         expected_tags = {
             "repository": "a",
@@ -152,7 +161,13 @@ def deduplicate_repositories(repositories):
 
 def is_ai_repository(repository):
     searchable = f"{repository.name} {repository.description}".lower()
-    return any(keyword in searchable for keyword in AI_KEYWORDS)
+    return any(
+        re.search(
+            rf"(?<![a-z0-9]){re.escape(keyword)}(?![a-z0-9])",
+            searchable,
+        )
+        for keyword in AI_KEYWORDS
+    )
 
 
 def select_repositories(repositories, limit=5):
