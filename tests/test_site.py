@@ -91,6 +91,7 @@ class StaticSiteTests(unittest.TestCase):
 
     def test_pages_workflow_uses_official_actions(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("actions/checkout@v6", workflow)
         self.assertIn("actions/configure-pages@", workflow)
         self.assertIn("actions/upload-pages-artifact@", workflow)
         self.assertIn("actions/deploy-pages@", workflow)
@@ -100,7 +101,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("cron: \"0 0 * * *\"", workflow)
         self.assertIn("workflow_dispatch:", workflow)
         self.assertIn("contents: write", workflow)
-        self.assertIn("actions/setup-python@", workflow)
+        self.assertIn("actions/checkout@v6", workflow)
+        self.assertIn("actions/setup-python@v6", workflow)
         self.assertIn("python3 scripts/update_trending.py", workflow)
         self.assertIn("git diff --quiet -- index.html", workflow)
 
