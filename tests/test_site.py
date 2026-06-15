@@ -9,6 +9,7 @@ STYLES = ROOT / "styles.css"
 WORKFLOW = ROOT / ".github" / "workflows" / "pages.yml"
 
 REQUIRED_SECTIONS = {
+    "trending",
     "featured",
     "ai-coding",
     "models",
@@ -72,6 +73,12 @@ class StaticSiteTests(unittest.TestCase):
     def test_stylesheet_is_referenced(self):
         html = INDEX.read_text(encoding="utf-8")
         self.assertIn('href="styles.css"', html)
+
+    def test_trending_section_has_update_markers_and_source(self):
+        html = INDEX.read_text(encoding="utf-8")
+        self.assertEqual(html.count("GITHUB_TRENDING_START"), 1)
+        self.assertEqual(html.count("GITHUB_TRENDING_END"), 1)
+        self.assertIn("https://github.com/trending", html)
 
     def test_images_are_local_and_exist(self):
         parser = self.parse_site()

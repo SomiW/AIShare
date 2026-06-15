@@ -2,6 +2,7 @@
 """Fetch and render GitHub Trending repositories."""
 
 from dataclasses import dataclass
+from html import escape
 from html.parser import HTMLParser
 import re
 
@@ -139,3 +140,83 @@ def deduplicate_repositories(repositories):
 def is_ai_repository(repository):
     searchable = f"{repository.name} {repository.description}".lower()
     return any(keyword in searchable for keyword in AI_KEYWORDS)
+
+
+def _render_repository(repository, rank):
+    language = escape(repository.language or "未标注")
+    return f"""          <li class="trending-item">
+            <span class="trending-rank">{rank:02d}</span>
+            <div class="trending-copy">
+              <h3><a href="{escape(repository.url, quote=True)}">{escape(repository.name)}</a></h3>
+              <p>{escape(repository.description or "暂无项目简介。")}</p>
+              <div class="trending-meta">
+                <span>{language}</span>
+                <span>{repository.stars_today:,} stars today</span>
+                <span>{repository.stars:,} total</span>
+              </div>
+            </div>
+          </li>"""
+
+
+def _render_list(title, subtitle, repositories, accent):
+    items = "\n".join(
+        _render_repository(repository, rank)
+        for rank, repository in enumerate(repositories, start=1)
+    )
+    return f"""      <section class="trending-panel {accent}">
+        <div class="trending-panel-heading">
+          <div>
+            <p class="section-kicker">Daily ranking</p>
+            <h3>{escape(title)}</h3>
+          </div>
+          <span>{escape(subtitle)}</span>
+        </div>
+        <ol class="trending-list">
+{items}
+        </ol>
+      </section>"""
+
+
+def render_trending_section(ai_repositories, development_repositories, generated_date):
+    ai_panel = _render_list(
+        "AI 热门",
+        "模型、Agent 与智能应用",
+        ai_repositories,
+        "trending-ai",
+    )
+    development_panel = _render_list(
+        "开发热门",
+        "工程工具与开源基础设施",
+        development_repositories,
+        "trending-dev",
+    )
+    return f"""    <section class="trending section-shell" id="trending">
+      <div class="section-heading trending-heading">
+        <div>
+          <p class="section-kicker">Trending today</p>
+          <h2>今日热门 <span>每日更新</span></h2>
+        </div>
+        <p>
+          更新于 {escape(generated_date)} · 数据来源
+          <a href="https://github.com/trending">GitHub Trending ↗</a>
+        </p>
+      </div>
+      <div class="trending-grid">
+{ai_panel}
+{development_panel}
+      </div>
+    </section>"""
+
+
+def replace_trending_section(document, section):
+    start_marker = "<!-- GITHUB_TRENDING_START -->"
+    end_marker = "<!-- GITHUB_TRENDING_END -->"
+    if document.count(start_marker) != 1 or document.count(end_marker) != 1:
+        raise ValueError("Expected exactly one GitHub Trending marker pair")
+    before, remainder = document.split(start_marker, maxsplit=1)
+    _, after = remainder.split(end_marker, maxsplit=1)
+    return (
+        f"{before}{start_marker}\n"
+        f"{section}\n"
+        f"    {end_marker}{after}"
+    )

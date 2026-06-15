@@ -2,9 +2,12 @@ from pathlib import Path
 import unittest
 
 from scripts.update_trending import (
+    Repository,
     deduplicate_repositories,
     is_ai_repository,
     parse_trending,
+    render_trending_section,
+    replace_trending_section,
 )
 
 
@@ -45,6 +48,60 @@ class TrendingParserTests(unittest.TestCase):
 
         self.assertTrue(is_ai_repository(repositories[0]))
         self.assertFalse(is_ai_repository(repositories[1]))
+
+
+class TrendingRenderingTests(unittest.TestCase):
+    def setUp(self):
+        self.ai_repository = Repository(
+            name="openai/openai-agents-python",
+            url="https://github.com/openai/openai-agents-python",
+            description="Agents & <tools>",
+            language="Python",
+            stars=12345,
+            stars_today=1234,
+        )
+        self.development_repository = Repository(
+            name="astral-sh/ruff",
+            url="https://github.com/astral-sh/ruff",
+            description="Fast Python tooling.",
+            language="Rust",
+            stars=40001,
+            stars_today=321,
+        )
+
+    def test_renders_two_ranked_lists_and_metadata(self):
+        section = render_trending_section(
+            [self.ai_repository],
+            [self.development_repository],
+            generated_date="2026-06-15",
+        )
+
+        self.assertIn('id="trending"', section)
+        self.assertIn("AI 热门", section)
+        self.assertIn("开发热门", section)
+        self.assertIn("2026-06-15", section)
+        self.assertIn("1,234 stars today", section)
+        self.assertIn("321 stars today", section)
+        self.assertIn("Agents &amp; &lt;tools&gt;", section)
+        self.assertIn("https://github.com/trending", section)
+
+    def test_replaces_only_the_marker_delimited_section(self):
+        document = (
+            "<main>\n"
+            "<!-- GITHUB_TRENDING_START -->\n"
+            "<section>Old</section>\n"
+            "<!-- GITHUB_TRENDING_END -->\n"
+            "<section>Keep</section>\n"
+            "</main>\n"
+        )
+
+        updated = replace_trending_section(document, "<section>New</section>")
+
+        self.assertIn("<section>New</section>", updated)
+        self.assertNotIn("<section>Old</section>", updated)
+        self.assertIn("<section>Keep</section>", updated)
+        self.assertEqual(updated.count("GITHUB_TRENDING_START"), 1)
+        self.assertEqual(updated.count("GITHUB_TRENDING_END"), 1)
 
 
 if __name__ == "__main__":
