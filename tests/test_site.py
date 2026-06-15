@@ -92,9 +92,9 @@ class StaticSiteTests(unittest.TestCase):
     def test_pages_workflow_uses_official_actions(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("actions/checkout@v6", workflow)
-        self.assertIn("actions/configure-pages@", workflow)
-        self.assertIn("actions/upload-pages-artifact@", workflow)
-        self.assertIn("actions/deploy-pages@", workflow)
+        self.assertIn("actions/configure-pages@v6", workflow)
+        self.assertIn("actions/upload-pages-artifact@v5", workflow)
+        self.assertIn("actions/deploy-pages@v5", workflow)
 
     def test_trending_workflow_refreshes_daily(self):
         workflow = TRENDING_WORKFLOW.read_text(encoding="utf-8")
