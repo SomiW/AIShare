@@ -13,6 +13,19 @@ python3 -m http.server 8000
 
 然后访问 `http://localhost:8000`。
 
+## 今日热门
+
+首页的“今日热门”分为 AI 热门和开发热门两栏，每栏最多展示五个
+GitHub Trending Daily 项目。GitHub Actions 每天在北京时间 08:00
+（UTC 00:00）运行更新脚本。抓取或解析失败时，工作流不会覆盖上一次成功
+生成的榜单。
+
+在仓库根目录手动更新：
+
+```bash
+python3 scripts/update_trending.py
+```
+
 ## 部署到 GitHub Pages
 
 仓库包含 `.github/workflows/pages.yml`。完成以下设置后，每次推送到
@@ -40,8 +53,10 @@ python3 -m http.server 8000
 - `index.html`：页面结构和工具内容。
 - `styles.css`：视觉样式与响应式布局。
 - `assets/`：页面插画。
+- `scripts/update_trending.py`：抓取、分类并生成今日热门。
 - `tests/test_site.py`：静态结构与部署配置测试。
 - `.github/workflows/pages.yml`：GitHub Pages 部署工作流。
+- `.github/workflows/update-trending.yml`：每日榜单更新工作流。
 
 ## 许可证
 

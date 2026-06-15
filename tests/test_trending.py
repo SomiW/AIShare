@@ -8,6 +8,7 @@ from scripts.update_trending import (
     parse_trending,
     render_trending_section,
     replace_trending_section,
+    select_repositories,
 )
 
 
@@ -48,6 +49,25 @@ class TrendingParserTests(unittest.TestCase):
 
         self.assertTrue(is_ai_repository(repositories[0]))
         self.assertFalse(is_ai_repository(repositories[1]))
+
+    def test_selects_separate_ai_and_development_lists(self):
+        repositories = deduplicate_repositories(
+            parse_trending(FIXTURE.read_text(encoding="utf-8"))
+        )
+
+        ai_repositories, development_repositories = select_repositories(
+            repositories,
+            limit=5,
+        )
+
+        self.assertEqual(
+            [repository.name for repository in ai_repositories],
+            ["openai/openai-agents-python"],
+        )
+        self.assertEqual(
+            [repository.name for repository in development_repositories],
+            ["astral-sh/ruff"],
+        )
 
 
 class TrendingRenderingTests(unittest.TestCase):

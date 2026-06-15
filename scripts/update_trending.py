@@ -2,9 +2,12 @@
 """Fetch and render GitHub Trending repositories."""
 
 from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
 from html import escape
 from html.parser import HTMLParser
+from pathlib import Path
 import re
+from urllib.request import Request, urlopen
 
 
 GITHUB_ORIGIN = "https://github.com"
@@ -22,6 +25,16 @@ AI_KEYWORDS = {
     "rag",
     "transformer",
 }
+TRENDING_URLS = (
+    "https://github.com/trending?since=daily",
+    "https://github.com/trending/python?since=daily",
+    "https://github.com/trending/javascript?since=daily",
+    "https://github.com/trending/typescript?since=daily",
+    "https://github.com/trending/rust?since=daily",
+    "https://github.com/trending/go?since=daily",
+)
+ROOT = Path(__file__).resolve().parents[1]
+INDEX_PATH = ROOT / "index.html"
 
 
 @dataclass(frozen=True)
@@ -142,6 +155,20 @@ def is_ai_repository(repository):
     return any(keyword in searchable for keyword in AI_KEYWORDS)
 
 
+def select_repositories(repositories, limit=5):
+    ai_repositories = []
+    development_repositories = []
+    for repository in repositories:
+        target = (
+            ai_repositories
+            if is_ai_repository(repository)
+            else development_repositories
+        )
+        if len(target) < limit:
+            target.append(repository)
+    return ai_repositories, development_repositories
+
+
 def _render_repository(repository, rank):
     language = escape(repository.language or "未标注")
     return f"""          <li class="trending-item">
@@ -220,3 +247,50 @@ def replace_trending_section(document, section):
         f"{section}\n"
         f"    {end_marker}{after}"
     )
+
+
+def fetch_trending(url):
+    request = Request(
+        url,
+        headers={
+            "Accept": "text/html",
+            "User-Agent": "AIShare-Trending-Updater/1.0",
+        },
+    )
+    with urlopen(request, timeout=30) as response:
+        return response.read().decode("utf-8")
+
+
+def update_index(index_path=INDEX_PATH):
+    repositories = []
+    for url in TRENDING_URLS:
+        repositories.extend(parse_trending(fetch_trending(url)))
+
+    repositories = deduplicate_repositories(repositories)
+    if not repositories:
+        raise RuntimeError("GitHub Trending returned no repository cards")
+
+    ai_repositories, development_repositories = select_repositories(repositories)
+    if not ai_repositories or not development_repositories:
+        raise RuntimeError("GitHub Trending didn't contain both ranking groups")
+
+    china_timezone = timezone(timedelta(hours=8))
+    generated_date = datetime.now(china_timezone).date().isoformat()
+    section = render_trending_section(
+        ai_repositories,
+        development_repositories,
+        generated_date,
+    )
+    document = index_path.read_text(encoding="utf-8")
+    index_path.write_text(
+        replace_trending_section(document, section),
+        encoding="utf-8",
+    )
+    print(
+        f"Updated {index_path} with {len(ai_repositories)} AI and "
+        f"{len(development_repositories)} development repositories."
+    )
+
+
+if __name__ == "__main__":
+    update_index()

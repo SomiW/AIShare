@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 STYLES = ROOT / "styles.css"
 WORKFLOW = ROOT / ".github" / "workflows" / "pages.yml"
+TRENDING_WORKFLOW = ROOT / ".github" / "workflows" / "update-trending.yml"
 
 REQUIRED_SECTIONS = {
     "trending",
@@ -55,6 +56,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertTrue(INDEX.is_file())
         self.assertTrue(STYLES.is_file())
         self.assertTrue(WORKFLOW.is_file())
+        self.assertTrue(TRENDING_WORKFLOW.is_file())
 
     def test_page_has_required_sections_and_catalog_size(self):
         parser = self.parse_site()
@@ -92,6 +94,15 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("actions/configure-pages@", workflow)
         self.assertIn("actions/upload-pages-artifact@", workflow)
         self.assertIn("actions/deploy-pages@", workflow)
+
+    def test_trending_workflow_refreshes_daily(self):
+        workflow = TRENDING_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("cron: \"0 0 * * *\"", workflow)
+        self.assertIn("workflow_dispatch:", workflow)
+        self.assertIn("contents: write", workflow)
+        self.assertIn("actions/setup-python@", workflow)
+        self.assertIn("python3 scripts/update_trending.py", workflow)
+        self.assertIn("git diff --quiet -- index.html", workflow)
 
 
 if __name__ == "__main__":
